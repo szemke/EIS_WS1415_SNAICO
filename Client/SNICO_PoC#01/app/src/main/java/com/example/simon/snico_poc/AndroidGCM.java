@@ -37,7 +37,7 @@ public class AndroidGCM extends Activity {
     /**
      * ProjektID
      */
-    String SENDER_ID = "539001017043";
+    String SENDER_ID = "API KEY";
 
     /**
      * LOG TAG
