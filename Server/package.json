@@ -1,0 +1,16 @@
+{
+  "name": "EIS_WS1415",
+  "description": "PoC #01 - Incoming POST",
+  "version": "0.0.1",
+  "main": "poc01.js",
+  "author": [
+    {"name": "Simon Zemke", "email": "simon.zemke@gmail.com"}
+  ],
+  "dependencies": {
+    "express": "3.x",
+    "mongoskin": "*",
+    "http": "*",
+	"gcm": "*",
+	"util": "*"
+  }
+}

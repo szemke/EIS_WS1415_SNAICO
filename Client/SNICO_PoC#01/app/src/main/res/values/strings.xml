@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Snico_PoC</string>
+    <string name="hello_world">Bitte geben Sie einen kurzen Text ein. Mit "Send" wird der Text zusammen mit der aktuellen Uhrzeit, über Http im JSON Format an den Server übertragen.</string>
+    <string name="pocText2">Bitte aktivieren Sie Ihre Lokalisierungs-Dienste und starten Sie die Ortung mit "Get Location".</string>
+    <string name="pocText3">Mit der Schaltfläche "Get Push" können Sie eine Push-Nachricht über Google Cloud Messaging anfordern.</string>
+    <string name="send">Send</string>
+    <string name="action_poc1">PoC#01 - POST</string>
+    <string name="action_poc2">PoC#02 - Location</string>
+    <string name="action_poc3">PoC#03 - GCM</string>
+    <string name="action_poc4">PoC#04 - Speech</string>
+    <string name="title_activity_android_httppost">PoC#01 - POST</string>
+    <string name="title_activity_android_location">PoC#02 - Location</string>
+    <string name="title_activity_android_gcm">PoC#03 - GCM</string>
+    <string name="btnLocation">Get Location</string>
+    <string name="lon">Longitude: </string>
+    <string name="lat">Latitude: </string>
+    <string name="address">Adresse: </string>
+    <string name="action_settings">Settings</string>
+    <string name="btnGcm">Get Push</string>
+    <string name="pocText3Display"></string>
+    <string name="title_activity_gcm_broadcast_receiver">GcmBroadcastReceiver</string>
+    <string name="title_activity_gcm_intent_service">GcmIntentService</string>
+
+</resources>
