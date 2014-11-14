@@ -4,7 +4,7 @@ var http = require('http');
 var util = require('util');
 var GCM = require('gcm').GCM;
 
-var apiKey = 'AIzaSyDHAABjgBtL6QysazsAwA7iZGLR8c1P8Y0';
+var apiKey = 'API Key';
 var gcm = new GCM(apiKey);
 var db = mongoDB.db('mongodb://localhost:27017/eis_poc01?auto_reconnect=true', {
 	safe: true
@@ -37,7 +37,7 @@ app.post('/post/', function(req, res){
 });
 
 /*
-* Get and Push
+* Post and Push
 */
 app.post('/gcm/', function(req, res){
 	console.log("Incoming RegID: "+req.body.regid);
