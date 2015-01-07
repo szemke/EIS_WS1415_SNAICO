@@ -13,7 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
 
-public class SNICOOverview extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class SNAICOOverview extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -110,18 +110,18 @@ public class SNICOOverview extends Activity implements NavigationDrawerFragment.
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((SNICOOverview) activity).onSectionAttached(
+            ((SNAICOOverview) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
 
     public void clickEvent(View v) {
         if (v.getId() == R.id.plus) {
-            Toast.makeText(SNICOOverview.this, "you click on button1",
+            Toast.makeText(SNAICOOverview.this, "you click on button1",
                     Toast.LENGTH_SHORT).show();
         }
         if (v.getId() == R.id.neuerAuftrag) {
-            Toast.makeText(SNICOOverview.this, "you click on neuer Auftrag",
+            Toast.makeText(SNAICOOverview.this, "you click on neuer Auftrag",
                     Toast.LENGTH_SHORT).show();
         }
         if (v.getId() == R.id.li) {

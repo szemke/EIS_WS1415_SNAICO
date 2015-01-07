@@ -4,23 +4,25 @@
     <string name="app_name">SNAICO</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_snaicosplash">SNAICOSplash</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_snicooverview">SNICOOverview</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
 
-    <!--SNICOOverview-->
+    <!-- SNAICOFirstStart -->
+    <string name="firstStartText">"Herzlich Willkommen bei der Applikation SNAICO - snow and ice controller.\nBitte wählen Sie zwischen den folgenden Optionen:"</string>
+
+    <!-- SNAICOOverview -->
     <string name="wetterlage">"aktuelle \nWetterlage"</string>
 
-    <!--Navigation Drawer Sections-->
+    <!-- Navigation Drawer Sections -->
     <string name="title_section1">Anzeigenamen ändern</string>
     <string name="title_section2">Weckfunktion</string>
     <string name="title_section3">Firmenleitung abgeben</string>
     <string name="title_section4">Firma gründen</string>
     <string name="title_section5">Firma verlassen</string>
     <string name="title_section6">Firma löschen</string>
+    <string name="title_activity_snaicofirst_start">SNAICOFirstStart</string>
 
 </resources>
