@@ -1,8 +1,6 @@
 package eis1415.rebecca.simon.snaico;
 
 import android.app.Activity;
-
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -10,31 +8,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.Toast;
 
 
-public class SNAICOOverview extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class SNAICOOverviewStaff extends Activity implements NavigationDrawerFragmentStaff.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private NavigationDrawerFragmentStaff mNavigationDrawerFragmentStaff;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_snicooverview);
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.action_bar);
+        setContentView(R.layout.activity_snaicooverview_staff);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragmentStaff = (NavigationDrawerFragmentStaff)
+                getFragmentManager().findFragmentById(R.id.navigation_drawer2);
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragmentStaff.setUp(
+                R.id.navigation_drawer2,
+                (DrawerLayout) findViewById(R.id.drawer_layout2));
     }
 
     @Override
@@ -42,7 +37,7 @@ public class SNAICOOverview extends Activity implements NavigationDrawerFragment
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container2, PlaceholderFragment.newInstance(position + 1))
                 .commit();
     }
 
@@ -57,21 +52,8 @@ public class SNAICOOverview extends Activity implements NavigationDrawerFragment
             case 3:
 
                 break;
-            case 4:
-
-                break;
-            case 5:
-
-                break;
-            case 6:
-
-                break;
         }
     }
-
-
-
-
 
 
     /**
@@ -102,30 +84,16 @@ public class SNAICOOverview extends Activity implements NavigationDrawerFragment
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_snicooverview, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_snaicooverview_staff, container, false);
             return rootView;
         }
 
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((SNAICOOverview) activity).onSectionAttached(
+            ((SNAICOOverviewStaff) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
 
-    public void clickEvent(View v) {
-        if (v.getId() == R.id.plus) {
-            Toast.makeText(SNAICOOverview.this, "you click on button1",
-                    Toast.LENGTH_SHORT).show();
-        }
-        if (v.getId() == R.id.neuerAuftrag) {
-            Toast.makeText(SNAICOOverview.this, "you click on neuer Auftrag",
-                    Toast.LENGTH_SHORT).show();
-        }
-        if (v.getId() == R.id.li) {
-
-
-        }
-    }
 }

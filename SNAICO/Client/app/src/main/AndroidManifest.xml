@@ -16,7 +16,6 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
-
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
@@ -26,6 +25,7 @@
         android:maxSdkVersion="18" />
 
     <application
+        android:name=".DataStore"
         android:allowBackup="true"
         android:icon="@drawable/snico"
         android:label=" "
@@ -49,6 +49,23 @@
             android:name=".SNAICOFirstStart"
             android:label=" "
             android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name=".SNAICONewCompany"
+            android:label=" "
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name=".SNAICONewCompanyCode"
+            android:label="@string/title_activity_snaiconew_company_code" >
+        </activity>
+        <activity
+            android:name=".SNAICOJoinCompany"
+            android:label="@string/title_activity_snaicojoin_company" >
+        </activity>
+        <activity
+            android:name=".SNAICOOverviewStaff"
+            android:label=" " >
         </activity>
     </application>
 

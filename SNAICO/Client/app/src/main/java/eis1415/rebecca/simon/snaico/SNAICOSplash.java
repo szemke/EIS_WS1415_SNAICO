@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -18,6 +17,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,40 +25,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class SNAICOSplash extends Activity {
 
-    public static final String EXTRA_MESSAGE = "message";
+
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String known = "known";
     private static final String unknown = "unknown";
     private static final String newUserSuccess = "success";
-    private String httpResponseStr = "hello world";
-    /**
-     * ProjektID
-     */
+    private String httpResponseStr = "foo";
+    private boolean companyLeader;
+
+
     String SENDER_ID = "539001017043";
-
-    /**
-     * LOG TAG
-     */
     static final String TAG = "GCM Demo";
-
-    TextView mDisplay;
     GoogleCloudMessaging gcm;
-    AtomicInteger msgId = new AtomicInteger();
     Context context;
 
     String regid;
-
-    /**
-     * Duration of wait *
-     */
-    private final int SPLASH_DISPLAY_LENGTH = 2000;
 
     /**
      * Called when the activity is first created.
@@ -75,7 +62,6 @@ public class SNAICOSplash extends Activity {
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(context);
-            Log.i(TAG, "already registered with ID: " + regid);
 
             if (regid.isEmpty()) {
                 registerInBackground();
@@ -144,7 +130,6 @@ public class SNAICOSplash extends Activity {
                     }
                     regid = gcm.register(SENDER_ID);
                     msg = "Device registered, registration ID=" + regid;
-                    sendRegistrationIdToBackend();
                     storeRegistrationId(context, regid);
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
@@ -180,9 +165,6 @@ public class SNAICOSplash extends Activity {
                 Context.MODE_PRIVATE);
     }
 
-    private void sendRegistrationIdToBackend() {
-        // Coming soon...
-    }
 
     private class ChkUser extends AsyncTask<String, Void, Boolean> {
         private ProgressDialog dialog;
@@ -202,11 +184,14 @@ public class SNAICOSplash extends Activity {
             if (dialog.isShowing()) {
                 this.dialog.setMessage("Connection established");
                 dialog.dismiss();
-                if(httpResponseStr.equals(unknown)){
-                    new newUser(SNAICOSplash.this).execute();
-                }
-                if(httpResponseStr.equals(known)){
-                      /* Create an Intent that will start the Menu-Activity. */
+                if(companyLeader == false){
+                    if(httpResponseStr.equals(unknown)){
+                        new newUser(SNAICOSplash.this).execute();
+                    }
+                    Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOOverviewStaff.class);
+                    SNAICOSplash.this.startActivity(mainIntent);
+                    SNAICOSplash.this.finish();
+                }else{
                     Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOOverview.class);
                     SNAICOSplash.this.startActivity(mainIntent);
                     SNAICOSplash.this.finish();
@@ -222,6 +207,16 @@ public class SNAICOSplash extends Activity {
             JSONParser jParser = new JSONParser();
             String url = "http://188.40.158.58:3000/user/chk";
             JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
+
+            try {
+                JSONArray response = jPost.getJSONArray("response");
+                for (int i = 0; i < response.length(); i++){
+                    JSONObject r = (JSONObject)response.get(i);
+                    companyLeader = r.getBoolean("companyLeader");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             try {
                 httpResponseStr = jPost.getString("response");
                 Log.d("response", httpResponseStr);
@@ -273,10 +268,7 @@ public class SNAICOSplash extends Activity {
 
             try {
                 httpResponseStr = jPost.getString("response");
-
                 Log.d("response", httpResponseStr);
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

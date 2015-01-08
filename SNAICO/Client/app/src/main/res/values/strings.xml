@@ -2,13 +2,26 @@
 <resources>
 
     <string name="app_name">SNAICO</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_snaicosplash">SNAICOSplash</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_snicooverview">SNICOOverview</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
+
+    <!-- SNAICOJoinCompany -->
+    <string name="firmaBeitretenHeadline">Firma beitreten</string>
+    <string name="firmaBeitretenText">Bitte geben Sie den Firmen Code ein:</string>
+    <string name="firmaBeitretenBtn">bestätigen</string>
+
+    <!-- SNAICONewCompany -->
+    <string name="firmaGruendenHeadline">Firma gründen</string>
+    <string name="firmaGruendenText">Bitte geben Sie den Firmennamen ein:</string>
+    <string name="firmaGruendenBtn">bestätigen</string>
+    <string name="firmaGruendenCodeHeadline">Einladungscode</string>
+    <string name="firmaGruendenCodeText">Die Firma wurde erfolgreich erstellt. Bitte geben Sie diesen Code an Ihre Mitarbeiter, damit diese Ihrer Firma beitreten können</string>
+    <string name="firmaGruendenCodeBtn">Code Weiterleiten</string>
+    <string name="firmaGruendenUebersichtBtn">zur Übersicht</string>
 
     <!-- SNAICOFirstStart -->
     <string name="firstStartText">"Herzlich Willkommen bei der Applikation SNAICO - snow and ice controller.\nBitte wählen Sie zwischen den folgenden Optionen:"</string>
@@ -24,5 +37,10 @@
     <string name="title_section5">Firma verlassen</string>
     <string name="title_section6">Firma löschen</string>
     <string name="title_activity_snaicofirst_start">SNAICOFirstStart</string>
+    <string name="title_activity_snaiconew_company">SNAICONewCompany</string>
+    <string name="title_activity_snaiconew_company_code">SNAICONewCompanyCode</string>
+    <string name="title_activity_snaicojoin_company">SNAICOJoinCompany</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_snaicooverview_staff">SNAICOOverviewStaff</string>
 
 </resources>
