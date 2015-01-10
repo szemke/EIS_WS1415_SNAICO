@@ -25,8 +25,6 @@ public class SNAICOOverview extends Activity implements NavigationDrawerFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snicooverview);
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.action_bar);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -55,15 +53,6 @@ public class SNAICOOverview extends Activity implements NavigationDrawerFragment
 
                 break;
             case 3:
-
-                break;
-            case 4:
-
-                break;
-            case 5:
-
-                break;
-            case 6:
 
                 break;
         }

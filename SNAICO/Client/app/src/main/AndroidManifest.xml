@@ -57,15 +57,27 @@
         </activity>
         <activity
             android:name=".SNAICONewCompanyCode"
-            android:label="@string/title_activity_snaiconew_company_code" >
+            android:label=" " >
         </activity>
         <activity
             android:name=".SNAICOJoinCompany"
-            android:label="@string/title_activity_snaicojoin_company" >
+            android:label=" " >
         </activity>
         <activity
             android:name=".SNAICOOverviewStaff"
             android:label=" " >
+        </activity>
+        <activity
+            android:name=".SNAICOJoinCompanyFinish"
+            android:label="  " >
+        </activity>
+        <activity
+            android:name=".SNAICOLeaveCompany"
+            android:label=" " >
+        </activity>
+        <activity
+            android:name=".SNAICOLeaveCompanyFinish"
+            android:label="@string/title_activity_snaicoleave_company_finish" >
         </activity>
     </application>
 

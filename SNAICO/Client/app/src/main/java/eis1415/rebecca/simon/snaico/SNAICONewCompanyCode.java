@@ -30,7 +30,7 @@ public class SNAICONewCompanyCode extends Activity {
             @Override
             public void onClick(View v) {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(SNAICONewCompanyCode.this, SNAICOOverviewStaff.class);
+                Intent mainIntent = new Intent(SNAICONewCompanyCode.this, SNAICOOverview.class);
                 SNAICONewCompanyCode.this.startActivity(mainIntent);
                 SNAICONewCompanyCode.this.finish();
             }

@@ -3,6 +3,7 @@ package eis1415.rebecca.simon.snaico;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,9 @@ public class SNAICOOverviewStaff extends Activity implements NavigationDrawerFra
 
                 break;
             case 3:
-
+                Intent mainIntent = new Intent(SNAICOOverviewStaff.this, SNAICOLeaveCompany.class);
+                SNAICOOverviewStaff.this.startActivity(mainIntent);
+                SNAICOOverviewStaff.this.finish();
                 break;
         }
     }

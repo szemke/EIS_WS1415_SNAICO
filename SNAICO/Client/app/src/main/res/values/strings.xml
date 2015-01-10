@@ -9,14 +9,29 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
 
+    <!-- SNAICOLeaveCompany -->
+    <string name="firmaVerlassenHeadline">Firma verlassen</string>
+    <string name="firmaVerlassenText">Sind Sie sicher das Sie die Firma verlassen wollen? Wenn ja geben Sie bitte den Firmencode ein:</string>
+    <string name="firmaVerlassenBtn">bestätigen</string>
+    <string name="firmaVerlassenFinishHeadline">Erfolgreich verlassen</string>
+    <string name="firmaVerlassenFinishText">Sie haben die Firma XY erfolgreich verlassen.</string>
+    <string name="firmaVerlassenFinishTextFragment1">"Sie haben die Firma "</string>
+    <string name="firmaVerlassenFinishTextFragment2">" erfolgreich verlassen"</string>
+    <string name="firmaVerlassenFinishBtn">zum Startbildschirm</string>
+
     <!-- SNAICOJoinCompany -->
     <string name="firmaBeitretenHeadline">Firma beitreten</string>
-    <string name="firmaBeitretenText">Bitte geben Sie den Firmen Code ein:</string>
+    <string name="firmaBeitretenText">Bitte geben Sie Ihren Namen und den Firmen Code ein:</string>
     <string name="firmaBeitretenBtn">bestätigen</string>
+    <string name="firmaBeitretenFinishHeadline">Erfolgreich beigetreten</string>
+    <string name="firmaBeitretenFinishText">Sie sind der Firma XY beigetreten Ihnen stehen jetzt alle Funktionen zur Verfügung.</string>
+    <string name="firmaBeitretenFinishTextFragment1">"Sie sind der Firma "</string>
+    <string name="firmaBeitretenFinishTextFragment2">" beigetreten Ihnen stehen jetzt alle Funktionen zur Verfügung."</string>
+    <string name="firmaBeitretenFinishBtn">zur Übersicht</string>
 
     <!-- SNAICONewCompany -->
     <string name="firmaGruendenHeadline">Firma gründen</string>
-    <string name="firmaGruendenText">Bitte geben Sie den Firmennamen ein:</string>
+    <string name="firmaGruendenText">Bitte geben Sie Ihren Namen und den Firmennamen ein:</string>
     <string name="firmaGruendenBtn">bestätigen</string>
     <string name="firmaGruendenCodeHeadline">Einladungscode</string>
     <string name="firmaGruendenCodeText">Die Firma wurde erfolgreich erstellt. Bitte geben Sie diesen Code an Ihre Mitarbeiter, damit diese Ihrer Firma beitreten können</string>
@@ -42,5 +57,8 @@
     <string name="title_activity_snaicojoin_company">SNAICOJoinCompany</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_snaicooverview_staff">SNAICOOverviewStaff</string>
+    <string name="title_activity_snaicojoin_company_finish">SNAICOJoinCompanyFinish</string>
+    <string name="title_activity_snaicoleave_company">SNAICOLeaveCompany</string>
+    <string name="title_activity_snaicoleave_company_finish">SNAICOLeaveCompanyFinish</string>
 
 </resources>

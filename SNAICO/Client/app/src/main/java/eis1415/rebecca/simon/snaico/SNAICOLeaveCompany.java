@@ -2,7 +2,6 @@ package eis1415.rebecca.simon.snaico;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,45 +25,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SNAICOJoinCompany extends Activity {
+public class SNAICOLeaveCompany extends Activity {
 
-    private String companyCodeStr;
-    private String nameStr;
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private String httpResponseStr = "foo";
     private String gcmRegId;
     Context context;
+    private String companyCodeStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_snaicojoin_company);
+        setContentView(R.layout.activity_snaicoleave_company);
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.action_bar_nosymbol);
 
         context = getApplicationContext();
         gcmRegId = getRegistrationId(context);
 
-        Button confirmJoinBtn = (Button) findViewById(R.id.firmaBeitretenBtn);
-        confirmJoinBtn.setOnClickListener(new View.OnClickListener() {
+        Button leaveCompanyBtn = (Button) findViewById(R.id.firmaVerlassenBtn);
+        leaveCompanyBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                EditText companyCode = (EditText) findViewById(R.id.firmaBeitretenEditText);
-                EditText name = (EditText) findViewById(R.id.firmaBeitretenEditTextName);
-                nameStr = name.getText().toString();
+                EditText companyCode = (EditText) findViewById(R.id.firmaVerlassenEditText);
                 companyCodeStr = companyCode.getText().toString();
-                Log.d("companyCodeStr", companyCodeStr);
-                new joinCompany(SNAICOJoinCompany.this).execute();
+
+                new leaveCompany(SNAICOLeaveCompany.this).execute();
 
             }
         });
     }
 
-    private class joinCompany extends AsyncTask<String, Void, Boolean> {
+    private class leaveCompany extends AsyncTask<String, Void, Boolean> {
         private Context context;
 
-        public joinCompany(Activity activity) {
+        public leaveCompany(Activity activity) {
             context = activity;
         }
 
@@ -72,11 +68,11 @@ public class SNAICOJoinCompany extends Activity {
         }
 
         protected void onPostExecute(final Boolean success) {
-                if(httpResponseStr != null){
-                    Intent mainIntent = new Intent(SNAICOJoinCompany.this, SNAICOJoinCompanyFinish.class);
-                    SNAICOJoinCompany.this.startActivity(mainIntent);
-                    SNAICOJoinCompany.this.finish();
-                }
+            if(httpResponseStr != null){
+                Intent mainIntent = new Intent(SNAICOLeaveCompany.this, SNAICOLeaveCompanyFinish.class);
+                SNAICOLeaveCompany.this.startActivity(mainIntent);
+                SNAICOLeaveCompany.this.finish();
+            }
         }
 
         protected Boolean doInBackground(final String... args) {
@@ -84,15 +80,13 @@ public class SNAICOJoinCompany extends Activity {
             List params = new ArrayList();
             params.add(new BasicNameValuePair("companyCode", companyCodeStr));
             params.add(new BasicNameValuePair("gcmRegId", gcmRegId));
-            params.add(new BasicNameValuePair("name", nameStr));
 
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company/join";
+            String url = "http://188.40.158.58:3000/company/leave";
             JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
 
             try {
                 httpResponseStr = jPost.getString("response");
-                ((DataStore)getApplication()).setGlobalString(httpResponseStr);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -37,8 +37,9 @@ public class SNAICOSplash extends Activity {
     private static final String unknown = "unknown";
     private static final String newUserSuccess = "success";
     private String httpResponseStr = "foo";
-    private boolean companyLeader;
-
+    private boolean companyLeader = false;
+    private String companyCode = "CompanyCode";
+    private String gcmRegId = "gcmRegId";
 
     String SENDER_ID = "539001017043";
     static final String TAG = "GCM Demo";
@@ -74,6 +75,123 @@ public class SNAICOSplash extends Activity {
             Log.i(TAG, "No valid Google Play Services APK found.");
             Toast.makeText(SNAICOSplash.this, "No valid Google Play Services APK found.",
                     Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private class ChkUser extends AsyncTask<String, Void, Boolean> {
+        private ProgressDialog dialog;
+        private Context context;
+
+        public ChkUser(Activity activity) {
+            context = activity;
+            dialog = new ProgressDialog(context);
+        }
+
+        protected void onPreExecute() {
+            this.dialog.setMessage("Connecting to Server...");
+            this.dialog.show();
+        }
+
+        protected void onPostExecute(final Boolean success) {
+            if (!companyLeader) {
+                if (!companyCode.equals("CompanyCode")) {
+                    Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOOverviewStaff.class);
+                    SNAICOSplash.this.startActivity(mainIntent);
+                    SNAICOSplash.this.finish();
+                }
+                if (!gcmRegId.equals("gcmRegId")) {
+                    Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOFirstStart.class);
+                    SNAICOSplash.this.startActivity(mainIntent);
+                    SNAICOSplash.this.finish();
+                } else {
+                    new newUser(SNAICOSplash.this).execute();
+                }
+            } else {
+                Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOOverview.class);
+                SNAICOSplash.this.startActivity(mainIntent);
+                SNAICOSplash.this.finish();
+            }
+       }
+
+
+        protected Boolean doInBackground(final String... args) {
+
+            List params = new ArrayList();
+            params.add(new BasicNameValuePair("gcmRegId", regid));
+
+            JSONParser jParser = new JSONParser();
+            String url = "http://188.40.158.58:3000/user/chk";
+            JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
+
+            try {
+                JSONArray response = jPost.getJSONArray("response");
+                for (int i = 0; i < response.length(); i++){
+                    JSONObject r = (JSONObject)response.get(i);
+
+                    if(r.has("companyLeader")) {
+                        companyLeader = r.getBoolean("companyLeader");
+                    }
+                    if(r.has("companyCode")) {
+                        companyCode = r.getString("companyCode");
+                    }
+                    if(r.has("gcmRegId")) {
+                        gcmRegId = r.getString("gcmRegId");
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                httpResponseStr = jPost.getString("response");
+                Log.d("response", httpResponseStr);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
+
+    private class newUser extends AsyncTask<String, Void, Boolean> {
+
+        public newUser(Activity activity) {
+            context = activity;
+        }
+
+        protected void onPreExecute() {
+
+        }
+
+        protected void onPostExecute(final Boolean success) {
+            if (httpResponseStr.equals(newUserSuccess)) {
+                Log.d("response", "newUser successful");
+                Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOFirstStart.class);
+                SNAICOSplash.this.startActivity(mainIntent);
+                SNAICOSplash.this.finish();
+            }
+        }
+
+
+        protected Boolean doInBackground(final String... args) {
+
+            Date date = new Date();
+            List params = new ArrayList();
+            params.add(new BasicNameValuePair("gcmRegId", regid));
+            params.add(new BasicNameValuePair("date", date.toString()));
+
+            JSONParser jParser = new JSONParser();
+            String url = "http://188.40.158.58:3000/user/new";
+            JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
+
+            try {
+                httpResponseStr = jPost.getString("response");
+                Log.d("response", httpResponseStr);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+
         }
     }
 
@@ -163,118 +281,6 @@ public class SNAICOSplash extends Activity {
     private SharedPreferences getGcmPreferences(Context context) {
         return getSharedPreferences(SNAICOSplash.class.getSimpleName(),
                 Context.MODE_PRIVATE);
-    }
-
-
-    private class ChkUser extends AsyncTask<String, Void, Boolean> {
-        private ProgressDialog dialog;
-        private Context context;
-
-        public ChkUser(Activity activity) {
-            context = activity;
-            dialog = new ProgressDialog(context);
-        }
-
-        protected void onPreExecute() {
-            this.dialog.setMessage("Connecting to Server...");
-            this.dialog.show();
-        }
-
-        protected void onPostExecute(final Boolean success) {
-            if (dialog.isShowing()) {
-                this.dialog.setMessage("Connection established");
-                dialog.dismiss();
-                if(companyLeader == false){
-                    if(httpResponseStr.equals(unknown)){
-                        new newUser(SNAICOSplash.this).execute();
-                    }
-                    Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOOverviewStaff.class);
-                    SNAICOSplash.this.startActivity(mainIntent);
-                    SNAICOSplash.this.finish();
-                }else{
-                    Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOOverview.class);
-                    SNAICOSplash.this.startActivity(mainIntent);
-                    SNAICOSplash.this.finish();
-                }
-            }
-        }
-
-        protected Boolean doInBackground(final String... args) {
-
-            List params = new ArrayList();
-            params.add(new BasicNameValuePair("gcmRegId", regid));
-
-            JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/user/chk";
-            JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
-
-            try {
-                JSONArray response = jPost.getJSONArray("response");
-                for (int i = 0; i < response.length(); i++){
-                    JSONObject r = (JSONObject)response.get(i);
-                    companyLeader = r.getBoolean("companyLeader");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                httpResponseStr = jPost.getString("response");
-                Log.d("response", httpResponseStr);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-    }
-
-    private class newUser extends AsyncTask<String, Void, Boolean> {
-        private ProgressDialog dialog;
-        private Context context;
-
-        public newUser(Activity activity) {
-            context = activity;
-            dialog = new ProgressDialog(context);
-        }
-
-        protected void onPreExecute() {
-            this.dialog.setMessage("Nachricht wird gesendet...");
-            this.dialog.show();
-        }
-
-        protected void onPostExecute(final Boolean success) {
-            if (dialog.isShowing()) {
-                this.dialog.setMessage("Nachricht gesendet.");
-                dialog.dismiss();
-                if (httpResponseStr.equals(newUserSuccess)) {
-                    Log.d("response", "newUser successful");
-                    Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOFirstStart.class);
-                    SNAICOSplash.this.startActivity(mainIntent);
-                    SNAICOSplash.this.finish();
-                }
-            }
-        }
-
-        protected Boolean doInBackground(final String... args) {
-
-            Date date = new Date();
-            List params = new ArrayList();
-            params.add(new BasicNameValuePair("gcmRegId", regid));
-            params.add(new BasicNameValuePair("date", date.toString()));
-
-            JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/user/new";
-            JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
-
-            try {
-                httpResponseStr = jPost.getString("response");
-                Log.d("response", httpResponseStr);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-
-        }
     }
 }
 

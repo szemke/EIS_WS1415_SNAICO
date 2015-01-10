@@ -33,6 +33,7 @@ public class SNAICONewCompany extends Activity {
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private String httpResponseStr = "foo";
     private String companyName;
+    private String name;
     private String gcmRegId;
     Context context;
 
@@ -51,13 +52,64 @@ public class SNAICONewCompany extends Activity {
             @Override
             public void onClick(View v) {
                 EditText firmaGruendenEditText = (EditText) findViewById(R.id.firmaGruendenEditText);
+                EditText firmaGruendenEditTextName = (EditText) findViewById(R.id.firmaGruendenEditTextName);
+
                 companyName = firmaGruendenEditText.getText().toString();
+                name = firmaGruendenEditTextName.getText().toString();
+
                 Log.d("getText: ", companyName);
                 if(companyName != null){
                     new newCompany(SNAICONewCompany.this).execute();
                 }
             }
         });
+    }
+
+    private class newCompany extends AsyncTask<String, Void, Boolean> {
+        private ProgressDialog dialog;
+        private Context context;
+
+        public newCompany(Activity activity) {
+            context = activity;
+            dialog = new ProgressDialog(context);
+        }
+
+        protected void onPreExecute() {
+            this.dialog.setMessage("Neue Firma wird angelegt..");
+            this.dialog.show();
+        }
+
+        protected void onPostExecute(final Boolean success) {
+                /* Create an Intent that will start the Menu-Activity. */
+                Intent mainIntent = new Intent(SNAICONewCompany.this, SNAICONewCompanyCode.class);
+                SNAICONewCompany.this.startActivity(mainIntent);
+                SNAICONewCompany.this.finish();
+        }
+
+        protected Boolean doInBackground(final String... args) {
+
+            List params = new ArrayList();
+            params.add(new BasicNameValuePair("companyName", companyName));
+            params.add(new BasicNameValuePair("gcmRegId", gcmRegId));
+            params.add(new BasicNameValuePair("name", name));
+
+            JSONParser jParser = new JSONParser();
+            String url = "http://188.40.158.58:3000/company/new";
+            JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
+
+            try {
+                httpResponseStr = jPost.getString("response");
+                ((DataStore)getApplication()).setGlobalString(httpResponseStr);
+                String test = ((DataStore)getApplication()).getGlobalString();
+                Log.d("response", test);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+        }
     }
 
     private String getRegistrationId(Context context) {
@@ -87,56 +139,6 @@ public class SNAICONewCompany extends Activity {
             return packageInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException("Could not get package name: " + e);
-        }
-    }
-
-    private class newCompany extends AsyncTask<String, Void, Boolean> {
-        private ProgressDialog dialog;
-        private Context context;
-
-        public newCompany(Activity activity) {
-            context = activity;
-            dialog = new ProgressDialog(context);
-        }
-
-        protected void onPreExecute() {
-            this.dialog.setMessage("Neue Firma wird angelegt..");
-            this.dialog.show();
-        }
-
-        protected void onPostExecute(final Boolean success) {
-            if (dialog.isShowing()) {
-                this.dialog.setMessage("Firma erfolgreich angelegt.");
-                dialog.dismiss();
-                /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(SNAICONewCompany.this, SNAICONewCompanyCode.class);
-                SNAICONewCompany.this.startActivity(mainIntent);
-                SNAICONewCompany.this.finish();
-            }
-        }
-
-        protected Boolean doInBackground(final String... args) {
-
-            List params = new ArrayList();
-            params.add(new BasicNameValuePair("companyName", companyName));
-            params.add(new BasicNameValuePair("gcmRegId", gcmRegId));
-
-            JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company/new";
-            JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
-
-            try {
-                httpResponseStr = jPost.getString("response");
-                ((DataStore)getApplication()).setGlobalString(httpResponseStr);
-                String test = ((DataStore)getApplication()).getGlobalString();
-                Log.d("response", test);
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-
         }
     }
 }
