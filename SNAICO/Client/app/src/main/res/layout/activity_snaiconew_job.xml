@@ -1,0 +1,162 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:background="#232323">
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#232323"
+    tools:context="eis1415.rebecca.simon.snaico.SNAICONewJob">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/neuerAuftragHeadline"
+        android:id="@+id/neuerAuftragHeadline"
+        android:textSize="20sp"
+        android:width="300dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Position:"
+        android:id="@+id/neuerAuftragPosition"
+        android:layout_below="@+id/neuerAuftragHeadline"
+        android:layout_marginTop="30dp"
+        android:textSize="16sp"
+        android:width="300dp"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:background="#dedede"
+        android:textColor="#ff000000"
+        android:width="300dp"
+        android:height="50dp"
+        android:textSize="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/neuerAuftragPositionGps"
+        android:id="@+id/neuerAuftragPositionGps"
+        android:layout_below="@+id/neuerAuftragPosition" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/neuerAuftragAdresseEditText"
+        android:text="Adresse eingeben"
+        android:width="300dp"
+        android:height="50dp"
+        android:background="#fff"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ff000000"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_below="@+id/neuerAuftragPositionGps"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Tätigkeit:"
+        android:id="@+id/neuerAuftragTaetitkeitTextView"
+        android:layout_below="@+id/neuerAuftragAdresseEditText"
+        android:layout_marginTop="33dp"
+        android:textSize="16sp"
+        android:width="300dp"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/neuerAuftragTaetitkeitEditText"
+        android:width="300dp"
+        android:height="50dp"
+        android:background="#fff"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ff000000"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_below="@+id/neuerAuftragTaetitkeitTextView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Mitarbeiter:"
+        android:id="@+id/neuerAuftragMitarbeiterTextView"
+        android:layout_below="@+id/neuerAuftragTaetitkeitEditText"
+        android:textSize="16sp"
+        android:width="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="31dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/neuerAuftragMitarbeiterSpinner"
+        android:layout_below="@+id/neuerAuftragMitarbeiterTextView"
+        android:background="#fff"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_alignEnd="@+id/neuerAuftragMitarbeiterTextView"
+        android:layout_alignStart="@+id/neuerAuftragMitarbeiterTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Kommentar:"
+        android:id="@+id/neuerAuftragKommentarTextView"
+        android:layout_below="@+id/neuerAuftragMitarbeiterSpinner"
+        android:textSize="16sp"
+        android:width="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/neuerAuftragKommentarEditText"
+        android:layout_below="@+id/neuerAuftragKommentarTextView"
+        android:width="300dp"
+        android:height="50dp"
+        android:background="#fff"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ff000000"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:background="#dedede"
+        android:textColor="#ff000000"
+        android:width="300dp"
+        android:height="50dp"
+        android:textSize="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/neuerAuftragBestaetigen"
+        android:id="@+id/neuerAuftragBestaetigen"
+        android:layout_below="@+id/neuerAuftragKommentarEditText"
+        android:layout_marginTop="15dp"/>
+
+</RelativeLayout>
+</ScrollView>

@@ -97,7 +97,6 @@ public class SNAICOJoinCompany extends Activity {
                 e.printStackTrace();
             }
             return null;
-
         }
     }
 

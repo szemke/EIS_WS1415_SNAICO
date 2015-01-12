@@ -44,6 +44,12 @@
     <!-- SNAICOOverview -->
     <string name="wetterlage">"aktuelle \nWetterlage"</string>
 
+    <!-- SNAICOCreateJob -->
+    <string name="neuerAuftragHeadline">Auftrag anlegen</string>
+    <string name="neuerAuftragPositionGps">Standort ermitteln</string>
+    <string name="neuerAuftragPositionAdresse">Adresse eingeben</string>
+    <string name="neuerAuftragBestaetigen">bestätigen</string>
+
     <!-- Navigation Drawer Sections -->
     <string name="title_section1">Anzeigenamen ändern</string>
     <string name="title_section2">Weckfunktion</string>
@@ -60,5 +66,7 @@
     <string name="title_activity_snaicojoin_company_finish">SNAICOJoinCompanyFinish</string>
     <string name="title_activity_snaicoleave_company">SNAICOLeaveCompany</string>
     <string name="title_activity_snaicoleave_company_finish">SNAICOLeaveCompanyFinish</string>
+    <string name="title_activity_snaiconew_job">SNAICONewJob</string>
+    <string name="title_activity_snaicoget_position_gps">SNAICOGetPositionGPS</string>
 
 </resources>
