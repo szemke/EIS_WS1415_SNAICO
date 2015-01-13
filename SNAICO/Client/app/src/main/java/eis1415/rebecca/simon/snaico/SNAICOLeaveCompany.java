@@ -78,12 +78,11 @@ public class SNAICOLeaveCompany extends Activity {
         protected Boolean doInBackground(final String... args) {
 
             List params = new ArrayList();
-            params.add(new BasicNameValuePair("companyCode", companyCodeStr));
             params.add(new BasicNameValuePair("gcmRegId", gcmRegId));
 
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company/leave";
-            JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
+            String url = "http://188.40.158.58:3000/company/member/";
+            JSONObject jPost = jParser.makeHttpRequest(url, "DELETE", params);
 
             try {
                 httpResponseStr = jPost.getString("response");

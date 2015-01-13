@@ -122,8 +122,8 @@ public class SNAICONewJob extends Activity {
             params.add(new BasicNameValuePair("gcmRegId", gcmRegId));
 
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company/getmember";
-            JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
+            String url = "http://188.40.158.58:3000/company/member/";
+            JSONObject jPost = jParser.makeHttpRequest(url, "GET", params);
             JSONArray httpResponseArr = null;
             try {
                 httpResponseArr = jPost.getJSONArray("staff");
@@ -165,7 +165,7 @@ public class SNAICONewJob extends Activity {
             params.add(new BasicNameValuePair("jobStaffMemberGcmRegId", companyStaff.get(jobStaffMemberStr)));
 
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/job/new";
+            String url = "http://188.40.158.58:3000/job";
             JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
 
 

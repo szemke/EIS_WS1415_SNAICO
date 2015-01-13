@@ -84,6 +84,10 @@
             android:name=".SNAICONewJob"
             android:label=" " >
         </activity>
+        <activity
+            android:name=".SNAICOServerIp"
+            android:label=" " >
+        </activity>
     </application>
 
 </manifest>

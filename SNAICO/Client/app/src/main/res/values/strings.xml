@@ -68,5 +68,10 @@
     <string name="title_activity_snaicoleave_company_finish">SNAICOLeaveCompanyFinish</string>
     <string name="title_activity_snaiconew_job">SNAICONewJob</string>
     <string name="title_activity_snaicoget_position_gps">SNAICOGetPositionGPS</string>
+    <string name="title_activity_snaicoserver_ip">SNAICOServerIp</string>
+
+    <!-- IpEingeben -->
+    <string name="ipEingebenTextView">Bitte geben Sie die Adresse des Servers ein: </string>
+    <string name="ipEingebenBtn">bestätigen</string>
 
 </resources>

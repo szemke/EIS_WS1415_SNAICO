@@ -87,8 +87,8 @@ public class SNAICOJoinCompany extends Activity {
             params.add(new BasicNameValuePair("name", nameStr));
 
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company/join";
-            JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
+            String url = "http://188.40.158.58:3000/company/member";
+            JSONObject jPost = jParser.makeHttpRequest(url, "PUT", params);
 
             try {
                 httpResponseStr = jPost.getString("response");

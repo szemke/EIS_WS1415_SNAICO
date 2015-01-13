@@ -8,11 +8,16 @@ import java.util.HashMap;
  * Created by Simon on 08.01.2015.
  */
 public class DataStore extends Application {
+
+    private String serverUrl = "none";
     private int globalInteger=1;
     private String globalString;
 
     private HashMap<String, String> companyStaff = new HashMap<String, String>();
 
+    public String getServerUrl(){
+        return serverUrl;
+    }
     public HashMap getCompanyStaff(){ return companyStaff; }
     public String getGlobalString(){
         return globalString;
@@ -21,6 +26,9 @@ public class DataStore extends Application {
         return globalInteger;
     }
 
+    public void setServerUrl(String serverUrl){
+        this.serverUrl = serverUrl;
+    }
     public void setCompanyStaff(HashMap<String, String> companyStaff) { this.companyStaff = companyStaff; }
     public void setGlobalString(String globalString){
         this.globalString = globalString;

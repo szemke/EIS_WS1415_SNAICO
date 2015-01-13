@@ -57,26 +57,28 @@ public class SNAICOSplash extends Activity {
         setContentView(R.layout.activity_snicosplash);
 
 
-        // Check GooglePlayServices
-        context = getApplicationContext();
 
-        if (checkPlayServices()) {
-            gcm = GoogleCloudMessaging.getInstance(this);
-            regid = getRegistrationId(context);
+            // Check GooglePlayServices
+            context = getApplicationContext();
 
-            if (regid.isEmpty()) {
-                registerInBackground();
+            if (checkPlayServices()) {
+                gcm = GoogleCloudMessaging.getInstance(this);
+                regid = getRegistrationId(context);
+
+                if (regid.isEmpty()) {
+                    registerInBackground();
+                }
+
+                new ChkUser(SNAICOSplash.this).execute();
+
+
+            } else {
+                Log.i(TAG, "No valid Google Play Services APK found.");
+                Toast.makeText(SNAICOSplash.this, "No valid Google Play Services APK found.",
+                        Toast.LENGTH_SHORT).show();
             }
-
-            new ChkUser(SNAICOSplash.this).execute();
-
-
-        } else {
-            Log.i(TAG, "No valid Google Play Services APK found.");
-            Toast.makeText(SNAICOSplash.this, "No valid Google Play Services APK found.",
-                    Toast.LENGTH_SHORT).show();
         }
-    }
+
 
 
     private class ChkUser extends AsyncTask<String, Void, Boolean> {
@@ -95,15 +97,16 @@ public class SNAICOSplash extends Activity {
 
         protected void onPostExecute(final Boolean success) {
             if (!companyLeader) {
-                if (!companyCode.equals("CompanyCode")) {
-                    Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOOverviewStaff.class);
-                    SNAICOSplash.this.startActivity(mainIntent);
-                    SNAICOSplash.this.finish();
-                }
                 if (!gcmRegId.equals("gcmRegId")) {
-                    Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOFirstStart.class);
-                    SNAICOSplash.this.startActivity(mainIntent);
-                    SNAICOSplash.this.finish();
+                    if (!companyCode.equals("CompanyCode")) {
+                        Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOOverviewStaff.class);
+                        SNAICOSplash.this.startActivity(mainIntent);
+                        SNAICOSplash.this.finish();
+                    }else {
+                        Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOFirstStart.class);
+                        SNAICOSplash.this.startActivity(mainIntent);
+                        SNAICOSplash.this.finish();
+                    }
                 } else {
                     new newUser(SNAICOSplash.this).execute();
                 }
@@ -120,9 +123,10 @@ public class SNAICOSplash extends Activity {
             List params = new ArrayList();
             params.add(new BasicNameValuePair("gcmRegId", regid));
 
+            String serverIp = ((DataStore)getApplication()).getServerUrl();
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/user/chk";
-            JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
+            String url = "http://188.40.158.58:3000/user/";
+            JSONObject jPost = jParser.makeHttpRequest(url, "GET", params);
 
             try {
                 JSONArray response = jPost.getJSONArray("response");
@@ -180,8 +184,9 @@ public class SNAICOSplash extends Activity {
             params.add(new BasicNameValuePair("gcmRegId", regid));
             params.add(new BasicNameValuePair("date", date.toString()));
 
+            String serverIp = ((DataStore)getApplication()).getServerUrl();
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/user/new";
+            String url = "http://188.40.158.58:3000/user";
             JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
 
             try {
