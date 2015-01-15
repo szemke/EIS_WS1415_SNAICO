@@ -2,6 +2,7 @@ package eis1415.rebecca.simon.snaico;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -93,7 +94,6 @@ public class SNAICONewJob extends Activity {
                 new newJob(SNAICONewJob.this).execute();
 
                 Log.d("confirmBtnClicked", companyStaff.get(jobStaffMemberStr));
-
             }
         });
     }
@@ -119,10 +119,12 @@ public class SNAICONewJob extends Activity {
         protected Boolean doInBackground(final String... args) {
 
             List params = new ArrayList();
-            params.add(new BasicNameValuePair("gcmRegId", gcmRegId));
+
+            final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            String companyCode = prefs.getString("CompanyCode", "");
 
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company/member/";
+            String url = "http://188.40.158.58:3000/company/"+companyCode+"/staff/";
             JSONObject jPost = jParser.makeHttpRequest(url, "GET", params);
             JSONArray httpResponseArr = null;
             try {
@@ -149,7 +151,9 @@ public class SNAICONewJob extends Activity {
         }
 
         protected void onPostExecute(final Boolean success) {
-
+            Intent mainIntent = new Intent(SNAICONewJob.this, SNAICONewJobFinish.class);
+            SNAICONewJob.this.startActivity(mainIntent);
+            SNAICONewJob.this.finish();
         }
 
         protected Boolean doInBackground(final String... args) {
@@ -164,8 +168,11 @@ public class SNAICONewJob extends Activity {
             params.add(new BasicNameValuePair("jobComment", jobCommentStr));
             params.add(new BasicNameValuePair("jobStaffMemberGcmRegId", companyStaff.get(jobStaffMemberStr)));
 
+            final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            String companyCode = prefs.getString("CompanyCode", "");
+
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/job";
+            String url = "http://188.40.158.58:3000/company/"+companyCode+"/job";
             JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
 
 

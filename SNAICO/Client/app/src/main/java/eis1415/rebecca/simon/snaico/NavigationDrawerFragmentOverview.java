@@ -20,14 +20,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragmentStaff extends Fragment {
+public class NavigationDrawerFragmentOverview extends Fragment {
 
     /**
      * Remember the position of the selected item.
@@ -58,7 +57,7 @@ public class NavigationDrawerFragmentStaff extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
-    public NavigationDrawerFragmentStaff() {
+    public NavigationDrawerFragmentOverview() {
     }
 
     @Override
@@ -89,7 +88,7 @@ public class NavigationDrawerFragmentStaff extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mDrawerListView = (ListView) inflater.inflate(
-                R.layout.fragment_navigation_drawer2, container, false);
+                R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -103,7 +102,8 @@ public class NavigationDrawerFragmentStaff extends Fragment {
                 new String[]{
                         getString(R.string.title_section1),
                         getString(R.string.title_section2),
-                        getString(R.string.title_section5),
+                        getString(R.string.title_section3),
+                        getString(R.string.title_section6),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
@@ -229,7 +229,25 @@ public class NavigationDrawerFragmentStaff extends Fragment {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // If the drawer is open, show the global app actions in the action bar. See also
+        // showGlobalContextActionBar, which controls the top-left area of the action bar.
+        if (mDrawerLayout != null && isDrawerOpen()) {
+            inflater.inflate(R.menu.overview_menu, menu);
+            showGlobalContextActionBar();
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * Per the navigation drawer design guidelines, updates the action bar to show the global app

@@ -40,8 +40,6 @@ public class SNAICOJoinCompany extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snaicojoin_company);
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.action_bar_nosymbol);
 
         context = getApplicationContext();
         gcmRegId = getRegistrationId(context);
@@ -56,7 +54,6 @@ public class SNAICOJoinCompany extends Activity {
                 companyCodeStr = companyCode.getText().toString();
                 Log.d("companyCodeStr", companyCodeStr);
                 new joinCompany(SNAICOJoinCompany.this).execute();
-
             }
         });
     }
@@ -73,6 +70,12 @@ public class SNAICOJoinCompany extends Activity {
 
         protected void onPostExecute(final Boolean success) {
                 if(httpResponseStr != null){
+                    SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("CompanyName",httpResponseStr);
+                    editor.putString("CompanyCode",companyCodeStr);
+                    editor.commit();
+
                     Intent mainIntent = new Intent(SNAICOJoinCompany.this, SNAICOJoinCompanyFinish.class);
                     SNAICOJoinCompany.this.startActivity(mainIntent);
                     SNAICOJoinCompany.this.finish();
@@ -82,17 +85,13 @@ public class SNAICOJoinCompany extends Activity {
         protected Boolean doInBackground(final String... args) {
 
             List params = new ArrayList();
-            params.add(new BasicNameValuePair("companyCode", companyCodeStr));
-            params.add(new BasicNameValuePair("gcmRegId", gcmRegId));
-            params.add(new BasicNameValuePair("name", nameStr));
 
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company/member";
+            String url = "http://188.40.158.58:3000/company/"+companyCodeStr+"/staff/"+gcmRegId;
             JSONObject jPost = jParser.makeHttpRequest(url, "PUT", params);
 
             try {
                 httpResponseStr = jPost.getString("response");
-                ((DataStore)getApplication()).setGlobalString(httpResponseStr);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

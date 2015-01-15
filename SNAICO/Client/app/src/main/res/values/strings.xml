@@ -44,11 +44,14 @@
     <!-- SNAICOOverview -->
     <string name="wetterlage">"aktuelle \nWetterlage"</string>
 
-    <!-- SNAICOCreateJob -->
+    <!-- SNAICONewJob -->
     <string name="neuerAuftragHeadline">Auftrag anlegen</string>
     <string name="neuerAuftragPositionGps">Standort ermitteln</string>
     <string name="neuerAuftragPositionAdresse">Adresse eingeben</string>
     <string name="neuerAuftragBestaetigen">bestätigen</string>
+    <string name="NeuerAuftragAngelegtHeadline">Auftrag erfolgreich angelegt.</string>
+    <string name="NeuerAuftragAngelegtTextView">Ihr Auftrag wurde erfolgreich angelegt und der Mitarbeiter wurde benachrichtigt</string>
+    <string name="NeuerAuftragAngelegtBtn">zur Übersicht</string>
 
     <!-- Navigation Drawer Sections -->
     <string name="title_section1">Anzeigenamen ändern</string>
@@ -73,5 +76,11 @@
     <!-- IpEingeben -->
     <string name="ipEingebenTextView">Bitte geben Sie die Adresse des Servers ein: </string>
     <string name="ipEingebenBtn">bestätigen</string>
+    <string name="title_activity_new_job_finish">NewJobFinish</string>
+    <string name="title_activity_test">test</string>
+    <string name="title_activity_testdrawer">testdrawer</string>
+
+    <!-- SharedPreferences -->
+    <string name="preference_file_key">eis1415.rebecca.simon.snaico.DataStore</string>
 
 </resources>

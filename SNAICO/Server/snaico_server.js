@@ -27,7 +27,7 @@ app.use(function(err, req, res, next){
 /*
 * New User
 */
-app.post('/user/new', function(req, res){
+app.post('/user', function(req, res){
 	console.log("Incoming POST");
 	
 	UserCollection.insert({gcmRegId: req.body.gcmRegId,
@@ -47,10 +47,9 @@ app.post('/user/new', function(req, res){
 /*
 * Check User
 */
-app.post('/user/chk', function(req, res){
-	console.log("Checking user...");
-	var regid = req.body.gcmRegId.toString();
- UserCollection.find({gcmRegId:regid}).toArray(function(err, result){
+app.get('/user/:id', function(req, res){
+	console.log("Checking user..." +req.param("id"));
+ UserCollection.find({gcmRegId:req.param("id")}).toArray(function(err, result){
 		if(err){
 			next(err);
 		}else{ 
@@ -74,7 +73,7 @@ app.post('/user/chk', function(req, res){
 /*
 * Create new Company
 */
-app.post('/company/new', function(req, res){
+app.post('/company', function(req, res){
 	var companyCode = CryptoJS.SHA256(req.body.companyName+req.body.gcmRegId);
 	var regid = req.body.gcmRegId.toString();
 	
@@ -104,21 +103,19 @@ app.post('/company/new', function(req, res){
 });
 
 /*
-* Join new Company
+* Join Company
 */
-app.post('/company/join', function(req, res){
+app.put('/company/:companycode/staff/:gcmregid', function(req, res){
 	console.log('Try to join Company!');
-	var regid = req.body.gcmRegId.toString();
-	
-	UserCollection.update({gcmRegId:regid}, {$set:{companyCode:req.body.companyCode, companyLeader:"false", name: req.body.name}}, function(err, resultUser) {
+	UserCollection.update({gcmRegId:req.param("gcmregid")}, {$set:{companyCode:req.param("companycode"), companyLeader:"false"}}, function(err, resultUser) {
 		if (err){
 			console.log(err);
 		}else{
-			CompanyCollection.update({companyCode:req.body.companyCode}, {$push:{staff: regid}}, function(err, resultCompany) {
+			CompanyCollection.update({companyCode:req.param("companycode")}, {$push:{staff: req.param("gcmregid")}}, function(err, resultCompany) {
 			if (err){
 				console.log(err);
 			}else{
-				 CompanyCollection.find({companyCode:req.body.companyCode}).toArray(function(err, result){
+				 CompanyCollection.find({companyCode:req.param("companycode")}).toArray(function(err, result){
 					if(err){
 						next(err);
 					}else{
@@ -138,15 +135,13 @@ app.post('/company/join', function(req, res){
 /*
 * Leave Company
 */
-app.post('/company/leave', function(req, res){
+app.delete('/company/:companycode/staff/:gcmregid', function(req, res){
 	console.log('Try to leave Company!');
-	var regid = req.body.gcmRegId.toString();
-	
-	UserCollection.remove({gcmRegId:regid}, function(err, resultUser) {
+	UserCollection.remove({gcmRegId:req.param("gcmregid")}, function(err, resultUser) {
 		if (err){
 			console.log(err);
 		}else{
-			CompanyCollection.update({staff:regid}, {$pull:{staff: regid}}, function(err, resultCompany) {
+			CompanyCollection.update({companyCode:req.param("companycode")}, {$pull:{staff: regid}}, function(err, resultCompany) {
 			if (err){
 				console.log(err);
 			}else{
@@ -161,6 +156,86 @@ app.post('/company/leave', function(req, res){
 	});
 });
 
+
+/*
+* Get All Company member
+*/
+app.get('/company/:companycode/staff', function(req, res){
+	console.log("Search for member..."+req.param("companycode"));
+		UserCollection.find({companyCode: req.param("companycode")}).toArray(function(err, resultUser){
+			if(err){
+				next(err);
+			}else{
+				var staff = [];
+				var objToJson = { };
+				for(i = 0; i < resultUser.length; i++){						
+					var mitarbeiter = { };
+					mitarbeiter.name = resultUser[i].name;
+					mitarbeiter.gcmRegId = resultUser[i].gcmRegId;
+					staff[i] = mitarbeiter;
+				}
+				console.log("staff: "+util.inspect(staff));
+				objToJson.staff = staff;
+
+				console.log('sending member object...'+util.inspect(objToJson));
+				res.writeHead(200, {'Content-Type': 'application/json'});
+				res.end(JSON.stringify(objToJson));
+			}
+		});
+});	 
+
+
+/*
+* Get all jobs from company
+*/
+app.get('/company/:companycode/job', function(req, res){
+console.log('Getting Jobs...');
+	CompanyCollection.find({companyCode:req.param("companycode")}).toArray(function(err, resultCompany){
+		if(err){
+			next(err);
+		}else{
+			console.log('Sending job object...'+util.inspect(result[0].job));
+			res.writeHead(200, {'Content-Type': 'application/json'});
+			var objToJson = { };
+			objToJson.response = result[0].job;
+			res.end(JSON.stringify(objToJson));	
+		}	
+	});	 
+});
+
+/*
+* New Job
+*/
+app.post('/company/:companycode/job', function(req, res){
+console.log('New Job');
+	CompanyCollection.update(
+		{companyCode: req.param("companycode")}, 
+			{$push:
+				{job:{
+						"jobAddress":req.body.jobAddress,
+						"jobActivity":req.body.jobActivity,
+						"jobAddress":req.body.jobAddress,
+						"jobStaffMemberGcmRegId":req.body.jobStaffMemberGcmRegId,
+						"jobComment":[
+										{
+											"jobStaffMemberGcmRegId":req.body.gcmRegId, 
+											"Comment":req.body.jobComment
+										}
+									]
+					}
+				}
+			}, function(err, result) {
+		if (err){
+			console.log(err);
+		}else{
+			console.log('Company leaved!');
+			res.writeHead(200, {'Content-Type': 'application/json'});
+			var objToJson = { };
+			objToJson.response = "success";
+			res.end(JSON.stringify(objToJson));	
+		}	
+	});	 
+});
 
 
 /*

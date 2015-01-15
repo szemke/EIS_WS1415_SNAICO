@@ -41,8 +41,6 @@ public class SNAICONewCompany extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snaiconew_company);
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.action_bar_nosymbol);
 
         context = getApplicationContext();
         gcmRegId = getRegistrationId(context);
@@ -80,10 +78,17 @@ public class SNAICONewCompany extends Activity {
         }
 
         protected void onPostExecute(final Boolean success) {
-                /* Create an Intent that will start the Menu-Activity. */
+            if(httpResponseStr != null) {
+                SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("CompanyName", name);
+                editor.putString("CompanyCode", httpResponseStr);
+                editor.commit();
+
                 Intent mainIntent = new Intent(SNAICONewCompany.this, SNAICONewCompanyCode.class);
                 SNAICONewCompany.this.startActivity(mainIntent);
                 SNAICONewCompany.this.finish();
+            }
         }
 
         protected Boolean doInBackground(final String... args) {
@@ -99,11 +104,6 @@ public class SNAICONewCompany extends Activity {
 
             try {
                 httpResponseStr = jPost.getString("response");
-                ((DataStore)getApplication()).setGlobalString(httpResponseStr);
-                String test = ((DataStore)getApplication()).getGlobalString();
-                Log.d("response", test);
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -2,7 +2,9 @@ package eis1415.rebecca.simon.snaico;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,10 +21,9 @@ public class SNAICOJoinCompanyFinish extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snaicojoin_company_finish);
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.action_bar_nosymbol);
 
-        String companyName = ((DataStore)getApplication()).getGlobalString();
+        final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String companyName = prefs.getString("CompanyName", "");
 
         TextView finishText = (TextView)findViewById(R.id.firmaBeitretenFinishText);
         finishText.setText(getString(R.string.firmaBeitretenFinishTextFragment1)+companyName+getString(R.string.firmaBeitretenFinishTextFragment2));

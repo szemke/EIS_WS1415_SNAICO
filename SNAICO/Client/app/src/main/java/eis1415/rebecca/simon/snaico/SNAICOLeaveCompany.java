@@ -38,8 +38,6 @@ public class SNAICOLeaveCompany extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snaicoleave_company);
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.action_bar_nosymbol);
 
         context = getApplicationContext();
         gcmRegId = getRegistrationId(context);
@@ -78,10 +76,12 @@ public class SNAICOLeaveCompany extends Activity {
         protected Boolean doInBackground(final String... args) {
 
             List params = new ArrayList();
-            params.add(new BasicNameValuePair("gcmRegId", gcmRegId));
+
+            final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            String companyCode = prefs.getString("CompanyCode", "");
 
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company/member/";
+            String url = "http://188.40.158.58:3000/company/"+companyCode+"/staff/"+gcmRegId;
             JSONObject jPost = jParser.makeHttpRequest(url, "DELETE", params);
 
             try {

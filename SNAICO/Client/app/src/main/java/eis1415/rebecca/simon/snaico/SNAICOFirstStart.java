@@ -17,8 +17,6 @@ public class SNAICOFirstStart extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snaicofirst_start);
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.action_bar_nosymbol);
 
         Button firmaGruenden = (Button) findViewById(R.id.firmaGruenden);
         firmaGruenden.setOnClickListener(new View.OnClickListener() {

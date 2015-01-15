@@ -25,9 +25,7 @@ public class SNAICOServerIp extends Activity {
             public void onClick(View v) {
                 EditText serverIpEditText = (EditText) findViewById(R.id.ipEingebenEditText);
 
-                String serverIp = serverIpEditText.getText().toString();
-                ((DataStore)getApplication()).setServerUrl(serverIp);
-                Log.d("getText: ", serverIp);
+
                 Intent mainIntent = new Intent(SNAICOServerIp.this, SNAICOSplash.class);
                 SNAICOServerIp.this.startActivity(mainIntent);
                 SNAICOServerIp.this.finish();

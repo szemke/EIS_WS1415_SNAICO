@@ -2,7 +2,7 @@
   "name": "EIS_WS1415",
   "description": "SNAICO - snow and ice controller",
   "version": "0.0.1",
-  "main": "server.js",
+  "main": "snaico_server.js",
   "author": [
     {"name": "Simon Zemke", "email": "simon.zemke@gmail.com", "name": "Rebecca Uebachs", "email": "r.uebachs@live.de"}
   ],

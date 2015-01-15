@@ -82,17 +82,11 @@ public class SNAICOSplash extends Activity {
 
 
     private class ChkUser extends AsyncTask<String, Void, Boolean> {
-        private ProgressDialog dialog;
-        private Context context;
 
         public ChkUser(Activity activity) {
-            context = activity;
-            dialog = new ProgressDialog(context);
         }
 
         protected void onPreExecute() {
-            this.dialog.setMessage("Connecting to Server...");
-            this.dialog.show();
         }
 
         protected void onPostExecute(final Boolean success) {
@@ -121,11 +115,9 @@ public class SNAICOSplash extends Activity {
         protected Boolean doInBackground(final String... args) {
 
             List params = new ArrayList();
-            params.add(new BasicNameValuePair("gcmRegId", regid));
 
-            String serverIp = ((DataStore)getApplication()).getServerUrl();
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/user/";
+            String url = "http://188.40.158.58:3000/user/"+regid;
             JSONObject jPost = jParser.makeHttpRequest(url, "GET", params);
 
             try {
@@ -184,7 +176,6 @@ public class SNAICOSplash extends Activity {
             params.add(new BasicNameValuePair("gcmRegId", regid));
             params.add(new BasicNameValuePair("date", date.toString()));
 
-            String serverIp = ((DataStore)getApplication()).getServerUrl();
             JSONParser jParser = new JSONParser();
             String url = "http://188.40.158.58:3000/user";
             JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
