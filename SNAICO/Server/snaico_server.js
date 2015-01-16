@@ -194,10 +194,10 @@ console.log('Getting Jobs...');
 		if(err){
 			next(err);
 		}else{
-			console.log('Sending job object...'+util.inspect(result[0].job));
+			console.log('Sending job object...'+util.inspect(resultCompany[0].job));
 			res.writeHead(200, {'Content-Type': 'application/json'});
 			var objToJson = { };
-			objToJson.response = result[0].job;
+			objToJson.response = resultCompany[0].job;
 			res.end(JSON.stringify(objToJson));	
 		}	
 	});	 
@@ -207,14 +207,21 @@ console.log('Getting Jobs...');
 * New Job
 */
 app.post('/company/:companycode/job', function(req, res){
-console.log('New Job');
+
+	var timestamp = Date.now() / 1000 | 0;
+	var jobCode = CryptoJS.SHA256(timestamp+req.body.jobActivity+req.body.jobAddress+req.body.jobStaffMemberGcmRegId);
+		
+	jobCode = jobCode.toString();
+	jobCode = jobCode.substring(0,6);
+	
+	console.log('New Job'+timestamp);
 	CompanyCollection.update(
 		{companyCode: req.param("companycode")}, 
 			{$push:
 				{job:{
+						"jobCode":jobCode,
 						"jobAddress":req.body.jobAddress,
 						"jobActivity":req.body.jobActivity,
-						"jobAddress":req.body.jobAddress,
 						"jobStaffMemberGcmRegId":req.body.jobStaffMemberGcmRegId,
 						"jobComment":[
 										{
@@ -228,11 +235,23 @@ console.log('New Job');
 		if (err){
 			console.log(err);
 		}else{
-			console.log('Company leaved!');
-			res.writeHead(200, {'Content-Type': 'application/json'});
-			var objToJson = { };
-			objToJson.response = "success";
-			res.end(JSON.stringify(objToJson));	
+			var message = {
+				registration_id: req.body.jobStaffMemberGcmRegId, // required
+				collapse_key: jobCode
+			};
+
+			gcm.send(message, function(err, messageId){
+				if (err) {
+					console.log("Something has gone wrong!" +err+req.body.jobStaffMemberGcmRegId);
+				} else {
+					console.log("Sent with message ID: ", messageId +"to "+req.body.jobStaffMemberGcmRegId);
+					console.log('Company leaved!');
+					res.writeHead(200, {'Content-Type': 'application/json'});
+					var objToJson = { };
+					objToJson.response = "success";
+					res.end(JSON.stringify(objToJson));	
+				}
+			});
 		}	
 	});	 
 });
