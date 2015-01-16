@@ -44,6 +44,12 @@
     <!-- SNAICOOverview -->
     <string name="wetterlage">"aktuelle \nWetterlage"</string>
 
+    <!-- SNAICOOverviewJob -->
+    <string name="uebersichtNeuerAuftrag">"Auftrag Übersicht"</string>
+    <string name="uebersichtAuftragBestaetigen">Auftrag annehmen</string>
+    <string name="detailNeuerAuftrag">"Auftrag Übersicht"</string>
+    <string name="detailAuftragNeuerKommentar">neuer Kommentar</string>
+    <string name="detailAuftragBestaetigen">zur Übersicht</string>
     <!-- SNAICONewJob -->
     <string name="neuerAuftragHeadline">Auftrag anlegen</string>
     <string name="neuerAuftragPositionGps">Standort ermitteln</string>
@@ -82,5 +88,7 @@
 
     <!-- SharedPreferences -->
     <string name="preference_file_key">eis1415.rebecca.simon.snaico.DataStore</string>
+    <string name="title_activity_snaicooverview_job">SNAICOOverviewJob</string>
+    <string name="title_activity_snaicodetail_job">SNAICODetailJob</string>
 
 </resources>

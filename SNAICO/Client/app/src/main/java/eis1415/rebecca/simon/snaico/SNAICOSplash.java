@@ -93,6 +93,7 @@ public class SNAICOSplash extends Activity {
             if (!companyLeader) {
                 if (!gcmRegId.equals("gcmRegId")) {
                     if (!companyCode.equals("CompanyCode")) {
+
                         Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOOverviewStaff.class);
                         SNAICOSplash.this.startActivity(mainIntent);
                         SNAICOSplash.this.finish();
@@ -105,6 +106,11 @@ public class SNAICOSplash extends Activity {
                     new newUser(SNAICOSplash.this).execute();
                 }
             } else {
+                SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("companyLeader",companyLeader);
+                editor.commit();
+
                 Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOOverview.class);
                 SNAICOSplash.this.startActivity(mainIntent);
                 SNAICOSplash.this.finish();
@@ -127,9 +133,17 @@ public class SNAICOSplash extends Activity {
 
                     if(r.has("companyLeader")) {
                         companyLeader = r.getBoolean("companyLeader");
+                        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean("companyLeader",companyLeader);
+                        editor.commit();
                     }
                     if(r.has("companyCode")) {
                         companyCode = r.getString("companyCode");
+                        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("companyCode",companyCode);
+                        editor.commit();
                     }
                     if(r.has("gcmRegId")) {
                         gcmRegId = r.getString("gcmRegId");

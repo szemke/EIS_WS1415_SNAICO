@@ -18,10 +18,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -29,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -39,14 +43,13 @@ public class SNAICOOverview extends Activity implements NavigationDrawerFragment
     private NavigationDrawerFragmentOverview mNavigationDrawerFragmentOverview;
     private String gcmRegId;
     private Context context;
+    private HashMap<String, String> companyJobs = new HashMap<String, String>();
+    private ArrayList<String> jobActivity = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snicooverview);
-
-
-
 
         context = getApplicationContext();
         gcmRegId = getRegistrationId(context);
@@ -122,6 +125,9 @@ public class SNAICOOverview extends Activity implements NavigationDrawerFragment
         private static final String ARG_SECTION_NUMBER = "section_number";
         private Button newJobBtn;
         private ListView jobListView;
+        private HashMap<String, String> companyJobs = new HashMap<String, String>();
+        private ArrayList<String> jobActivity = new ArrayList<String>();
+        ArrayAdapter<String> adapter;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -151,22 +157,9 @@ public class SNAICOOverview extends Activity implements NavigationDrawerFragment
                 }
             });
 
-            jobListView = (ListView) rootView.findViewById(R.id.laufendeAuftraegeListView);
-            String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                    "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                    "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-                    "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-                    "Android", "iPhone", "WindowsMobile" };
+            new getAllJobs(getActivity()).execute();
 
-            // Define a new Adapter
-            // First parameter - Context
-            // Second parameter - Layout for the row
-            // Third parameter - ID of the TextView to which the data is written
-            // Forth - the Array of data
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, values);
-            jobListView.setAdapter(adapter);
-
+            adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, jobActivity);
 
             return rootView;
         }
@@ -177,43 +170,71 @@ public class SNAICOOverview extends Activity implements NavigationDrawerFragment
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
 
+        private class getAllJobs extends AsyncTask<String, Void, Boolean> {
+            private Context context;
+
+            public getAllJobs(Activity activity) {
+                context = activity;
+            }
+
+            protected void onPreExecute() {
+            }
+
+            protected void onPostExecute(final Boolean success) {
+                jobListView = (ListView) getActivity().findViewById(R.id.laufendeAuftraegeListView);
+                jobListView.setAdapter(adapter);
+
+                jobListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        String positionActivity = (String) jobListView.getItemAtPosition(position);
+
+                        String jobCodeStr = companyJobs.get(positionActivity);
+
+                        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("selectedJob",jobCodeStr);
+                        editor.commit();
+
+                        Intent intent = new Intent(getActivity(),SNAICODetailJob.class);
+                        startActivity(intent);
+
+
+                    }
+                });
+            }
+
+            protected Boolean doInBackground(final String... args) {
+
+                List params = new ArrayList();
+
+                final SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                String companyCode = prefs.getString("companyCode", "");
+
+                Log.d("companycodebefore",companyCode);
+
+                JSONParser jParser = new JSONParser();
+                String url = "http://188.40.158.58:3000/company/"+companyCode+"/job/";
+                JSONObject jPost = jParser.makeHttpRequest(url, "GET", params);
+                JSONArray httpResponseArr = null;
+
+                try {
+                    httpResponseArr = jPost.getJSONArray("response");
+                    for(int i = 0; i < httpResponseArr.length();i++){
+                        companyJobs.put(httpResponseArr.getJSONObject(i).getString("jobActivity"),httpResponseArr.getJSONObject(i).getString("jobCode"));
+                        jobActivity.add(httpResponseArr.getJSONObject(i).getString("jobActivity"));
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+        }
+
     }
-
-
-
-
-    private class getAllJobs extends AsyncTask<String, Void, Boolean> {
-        private Context context;
-
-        public getAllJobs(Activity activity) {
-            context = activity;
-        }
-
-        protected void onPreExecute() {
-        }
-
-        protected void onPostExecute(final Boolean success) {
-
-        }
-
-        protected Boolean doInBackground(final String... args) {
-
-            List params = new ArrayList();
-
-
-            JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company/job";
-            JSONObject jPost = jParser.makeHttpRequest(url, "GET", params);
-            JSONArray httpResponseArr = null;
-
-
-            return null;
-        }
-    }
-
-
-
-
 
     private String getRegistrationId(Context context) {
         final SharedPreferences prefs = getGcmPreferences(context);

@@ -82,7 +82,6 @@ public class SNAICONewCompany extends Activity {
                 SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("CompanyName", name);
-                editor.putString("CompanyCode", httpResponseStr);
                 editor.commit();
 
                 Intent mainIntent = new Intent(SNAICONewCompany.this, SNAICONewCompanyCode.class);

@@ -121,7 +121,7 @@ public class SNAICONewJob extends Activity {
             List params = new ArrayList();
 
             final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-            String companyCode = prefs.getString("CompanyCode", "");
+            String companyCode = prefs.getString("companyCode", "");
 
             JSONParser jParser = new JSONParser();
             String url = "http://188.40.158.58:3000/company/"+companyCode+"/staff/";
@@ -169,7 +169,7 @@ public class SNAICONewJob extends Activity {
             params.add(new BasicNameValuePair("jobStaffMemberGcmRegId", companyStaff.get(jobStaffMemberStr)));
 
             final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-            String companyCode = prefs.getString("CompanyCode", "");
+            String companyCode = prefs.getString("companyCode", "");
 
             JSONParser jParser = new JSONParser();
             String url = "http://188.40.158.58:3000/company/"+companyCode+"/job";

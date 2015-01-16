@@ -26,11 +26,22 @@
         android:maxSdkVersion="18" />
 
     <application
-
         android:allowBackup="true"
         android:icon="@drawable/snico"
         android:label=" "
         android:theme="@style/AppTheme" >
+        <receiver
+            android:name=".GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.example.simon.snico_poc" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".GcmIntentService" />
+
         <activity
             android:name=".SNAICOSplash"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -90,6 +101,14 @@
         </activity>
         <activity
             android:name=".SNAICONewJobFinish"
+            android:label=" " >
+        </activity>
+        <activity
+            android:name=".SNAICOAcceptJob"
+            android:label=" " >
+        </activity>
+        <activity
+            android:name=".SNAICODetailJob"
             android:label=" " >
         </activity>
     </application>
