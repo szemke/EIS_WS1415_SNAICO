@@ -79,9 +79,10 @@ public class SNAICOLeaveCompany extends Activity {
 
             final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             String companyCode = prefs.getString("CompanyCode", "");
+            String ServerAddress = prefs.getString("ServerAddress", "");
 
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company/"+companyCode+"/staff/"+gcmRegId;
+            String url = ServerAddress+"company/"+companyCode+"/staff/"+gcmRegId;
             JSONObject jPost = jParser.makeHttpRequest(url, "DELETE", params);
 
             try {

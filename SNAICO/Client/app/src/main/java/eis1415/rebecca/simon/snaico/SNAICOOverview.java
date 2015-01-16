@@ -56,6 +56,7 @@ public class SNAICOOverview extends Activity implements NavigationDrawerFragment
 
 
 
+
         mNavigationDrawerFragmentOverview = (NavigationDrawerFragmentOverview)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
 
@@ -211,11 +212,12 @@ public class SNAICOOverview extends Activity implements NavigationDrawerFragment
 
                 final SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
                 String companyCode = prefs.getString("companyCode", "");
+                String ServerAddress = prefs.getString("ServerAddress", "");
 
                 Log.d("companycodebefore",companyCode);
 
                 JSONParser jParser = new JSONParser();
-                String url = "http://188.40.158.58:3000/company/"+companyCode+"/job/";
+                String url = ServerAddress+"company/"+companyCode+"/job/";
                 JSONObject jPost = jParser.makeHttpRequest(url, "GET", params);
                 JSONArray httpResponseArr = null;
 

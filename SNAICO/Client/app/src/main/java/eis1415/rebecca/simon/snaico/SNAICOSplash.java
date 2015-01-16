@@ -56,7 +56,14 @@ public class SNAICOSplash extends Activity {
         super.onCreate(icicle);
         setContentView(R.layout.activity_snicosplash);
 
+        final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        boolean isServerSet = prefs.getBoolean("ServerAddressIsSet", false);
 
+        if(!isServerSet) {
+            Intent mainIntent = new Intent(SNAICOSplash.this, SNAICOServerIp.class);
+            SNAICOSplash.this.startActivity(mainIntent);
+            SNAICOSplash.this.finish();
+        }else {
 
             // Check GooglePlayServices
             context = getApplicationContext();
@@ -78,6 +85,7 @@ public class SNAICOSplash extends Activity {
                         Toast.LENGTH_SHORT).show();
             }
         }
+   }
 
 
 

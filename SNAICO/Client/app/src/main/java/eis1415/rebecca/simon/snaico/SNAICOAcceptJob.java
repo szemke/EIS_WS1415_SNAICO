@@ -89,11 +89,12 @@ public class SNAICOAcceptJob extends Activity {
             List params = new ArrayList();
 
             final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            String ServerAddress = prefs.getString("ServerAddress", "");
 
             String jobCode = prefs.getString("lastPush", "");
 
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company/" + companyCode + "/job/";
+            String url = ServerAddress+"company/" + companyCode + "/job/";
             JSONObject jPost = jParser.makeHttpRequest(url, "GET", params);
             JSONArray httpResponseArr = null;
 
@@ -138,10 +139,11 @@ public class SNAICOAcceptJob extends Activity {
             List params = new ArrayList();
 
             final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            String ServerAddress = prefs.getString("ServerAddress", "");
 
 
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company/" + companyCode + "/staff/";
+            String url = ServerAddress+"company/" + companyCode + "/staff/";
             JSONObject jPost = jParser.makeHttpRequest(url, "GET", params);
             JSONArray httpResponseArr = null;
             try {
@@ -173,8 +175,11 @@ public class SNAICOAcceptJob extends Activity {
 
             List params = new ArrayList();
 
+            final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            String ServerAddress = prefs.getString("ServerAddress", "");
+
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/user/" + gcmRegId;
+            String url = ServerAddress+"user/" + gcmRegId;
             JSONObject jPost = jParser.makeHttpRequest(url, "GET", params);
 
             try {

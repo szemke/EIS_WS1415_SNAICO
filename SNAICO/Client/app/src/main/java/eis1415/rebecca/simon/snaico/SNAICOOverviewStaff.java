@@ -172,9 +172,10 @@ public class SNAICOOverviewStaff extends Activity implements NavigationDrawerFra
 
                 final SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
                 String companyCode = prefs.getString("companyCode", "");
+                String ServerAddress = prefs.getString("ServerAddress", "");
 
                 JSONParser jParser = new JSONParser();
-                String url = "http://188.40.158.58:3000/company/"+companyCode+"/job/";
+                String url = ServerAddress+"company/"+companyCode+"/job/";
                 JSONObject jPost = jParser.makeHttpRequest(url, "GET", params);
                 JSONArray httpResponseArr = null;
 

@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/ipEingebenEditText"
         android:layout_below="@+id/ipEingebenTextView"
-        android:text="http://"
+        android:text="http://localhost:3000/"
         android:layout_marginTop="30dp"
         android:width="300dp"
         android:height="50dp"

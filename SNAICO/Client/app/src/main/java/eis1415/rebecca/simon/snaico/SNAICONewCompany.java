@@ -97,8 +97,11 @@ public class SNAICONewCompany extends Activity {
             params.add(new BasicNameValuePair("gcmRegId", gcmRegId));
             params.add(new BasicNameValuePair("name", name));
 
+            final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            String ServerAddress = prefs.getString("ServerAddress", "");
+
             JSONParser jParser = new JSONParser();
-            String url = "http://188.40.158.58:3000/company";
+            String url = ServerAddress+"company";
             JSONObject jPost = jParser.makeHttpRequest(url, "POST", params);
 
             try {
