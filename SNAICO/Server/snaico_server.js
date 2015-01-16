@@ -107,7 +107,7 @@ app.post('/company', function(req, res){
 */
 app.put('/company/:companycode/staff/:gcmregid', function(req, res){
 	console.log('Try to join Company!');
-	UserCollection.update({gcmRegId:req.param("gcmregid")}, {$set:{companyCode:req.param("companycode"), companyLeader:"false"}}, function(err, resultUser) {
+	UserCollection.update({gcmRegId:req.param("gcmregid")}, {$set:{companyCode:req.param("companycode"), companyLeader:"false", name:req.body.name}}, function(err, resultUser) {
 		if (err){
 			console.log(err);
 		}else{
@@ -141,7 +141,7 @@ app.delete('/company/:companycode/staff/:gcmregid', function(req, res){
 		if (err){
 			console.log(err);
 		}else{
-			CompanyCollection.update({companyCode:req.param("companycode")}, {$pull:{staff: regid}}, function(err, resultCompany) {
+			CompanyCollection.update({companyCode:req.param("companycode")}, {$pull:{staff: req.param("gcmregid")}}, function(err, resultCompany) {
 			if (err){
 				console.log(err);
 			}else{
