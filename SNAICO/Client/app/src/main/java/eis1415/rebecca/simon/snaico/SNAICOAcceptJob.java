@@ -76,10 +76,16 @@ public class SNAICOAcceptJob extends Activity {
                 public void onClick(View v) {
 
                     //AcceptJobMethode
-
-                    Intent mainIntent = new Intent(SNAICOAcceptJob.this, SNAICOOverviewStaff.class);
-                    SNAICOAcceptJob.this.startActivity(mainIntent);
-                    SNAICOAcceptJob.this.finish();
+                    final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                    if(prefs.getBoolean("companyLeader", false)) {
+                        Intent mainIntent = new Intent(SNAICOAcceptJob.this, SNAICOOverviewStaff.class);
+                        SNAICOAcceptJob.this.startActivity(mainIntent);
+                        SNAICOAcceptJob.this.finish();
+                    }else{
+                        Intent mainIntent = new Intent(SNAICOAcceptJob.this, SNAICOOverview.class);
+                        SNAICOAcceptJob.this.startActivity(mainIntent);
+                        SNAICOAcceptJob.this.finish();
+                    }
                 }
             });
         }

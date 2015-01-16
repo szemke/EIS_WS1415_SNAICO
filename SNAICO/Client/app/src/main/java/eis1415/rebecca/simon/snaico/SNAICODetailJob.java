@@ -71,7 +71,7 @@ public class SNAICODetailJob extends Activity {
 
                     //AcceptJobMethode
                     final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-                    if(!prefs.getBoolean("CompanyLeader", false)){
+                    if(prefs.getBoolean("companyLeader", false)){
                         Intent mainIntent = new Intent(SNAICODetailJob.this, SNAICOOverview.class);
                         SNAICODetailJob.this.startActivity(mainIntent);
                         SNAICODetailJob.this.finish();
