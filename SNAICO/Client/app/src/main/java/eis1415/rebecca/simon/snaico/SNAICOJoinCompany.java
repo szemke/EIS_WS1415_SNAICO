@@ -90,6 +90,8 @@ public class SNAICOJoinCompany extends Activity {
             String ServerAddress = prefs.getString("ServerAddress", "");
 
             JSONParser jParser = new JSONParser();
+            params.add(new BasicNameValuePair("name", nameStr));
+
             String url = ServerAddress+"company/"+companyCodeStr+"/staff/"+gcmRegId;
             JSONObject jPost = jParser.makeHttpRequest(url, "PUT", params);
 
