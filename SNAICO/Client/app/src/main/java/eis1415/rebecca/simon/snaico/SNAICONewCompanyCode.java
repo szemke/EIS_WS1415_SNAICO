@@ -22,7 +22,7 @@ public class SNAICONewCompanyCode extends Activity {
         setContentView(R.layout.activity_snaiconew_company_code);
 
         final SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String companyCodeStr = prefs.getString("CompanyCode", "");
+        String companyCodeStr = prefs.getString("companyCode", "");
 
         EditText companyCode = (EditText) findViewById(R.id.firmaGruendenCodeEditText);
         companyCode.setText(companyCodeStr);
