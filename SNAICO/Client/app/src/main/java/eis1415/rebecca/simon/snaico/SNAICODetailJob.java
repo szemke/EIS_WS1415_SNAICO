@@ -22,7 +22,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+/*
+* SNAICODetailJob zeigt eine Übersicht zu dem ausgewählten Job.
+ */
 public class SNAICODetailJob extends Activity {
 
     private String  jobActivity;

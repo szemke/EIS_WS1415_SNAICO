@@ -22,6 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 
 
+
+/*
+* SNAICOAcceptJob wird von dem GCMIntentService aufgerufen wenn ein neuer Auftrag angelegt wird.
+ */
 public class SNAICOAcceptJob extends Activity {
 
     public static final String PROPERTY_REG_ID = "registration_id";

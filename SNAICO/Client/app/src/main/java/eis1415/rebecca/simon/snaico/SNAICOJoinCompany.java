@@ -25,7 +25,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/*
+* SNAICOJoinCompany der Benutzer kann einer Firma mit dem entsprechendem Firmencode beitreten
+ */
 public class SNAICOJoinCompany extends Activity {
 
     private String companyCodeStr;

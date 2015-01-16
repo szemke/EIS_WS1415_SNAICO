@@ -10,7 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-
+/*
+* SNAICOFirstStart erkennt ob der Benutzer zum ersten Mal die Applikation startet, oder ein wiederkehrender Benutzer ist.
+* Ist der Benutzer bekannt wird geprüft ob es sich um einen Firmenleiter oder Mitarbeiter handelt und wird demensprechend auf
+* die nächste Screen umgeleitet.
+ */
 public class SNAICOFirstStart extends Activity {
 
     @Override
